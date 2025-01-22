@@ -14,7 +14,7 @@ jobs:
         uses: dhkatz/steam-download@v1.2.0
         with:
           username: ${{ secrets.STEAM_USERNAME }}
-          password: ${{ secrets.STEAM_PASSWORD }}
+          vdf: ${{ secrets.STEAM_VDF }}
           appid: ${{ secrets.STEAM_APP_ID }}
           path: "${{ github.workspace }}\\Gang Beasts"
 
