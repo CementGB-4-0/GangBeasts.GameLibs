@@ -23,7 +23,7 @@ jobs:
           if (!(Test-Path "${{ github.workspace }}\\Gang Beasts\\Gang Beasts.exe")) {
             Write-Error "Gang Beasts executable not found!"
 
-            Get-ChildItem -Path "${{github.workspace}}\\Gang Beasts"
+            Get-ChildItem -Path "${{github.workspace}}"
             exit 1
           }
 
