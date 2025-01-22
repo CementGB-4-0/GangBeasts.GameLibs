@@ -24,7 +24,7 @@ jobs:
           if (!(Test-Path "${{ github.workspace }}\\Gang Beasts\\Gang Beasts.exe")) {
             Write-Error "Gang Beasts executable not found!"
 
-            tree "${{github.workspace}}" /F
+            tree "${{github.workspace}}" /F >> $ENV:GITHUB_OUTPUT
             exit 1
           }
 
