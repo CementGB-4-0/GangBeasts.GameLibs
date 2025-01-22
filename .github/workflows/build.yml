@@ -1,6 +1,7 @@
 name: Build
 
-on: push
+on: 
+  push
 
 jobs:
   build:
@@ -29,14 +30,14 @@ jobs:
 
       - name: Find and copy assemblies to package
         run: |
-          Copy-Item "${{ github.workspace }}\\Gang Beasts\\MelonLoader\\Il2CppAssemblies" -Filter *.dll -Destination "${{ github.workspace }}" -Recurse
+          Copy-Item "${{ github.workspace }}\\Gang Beasts\\MelonLoader\\Il2CppAssemblies" -Filter *.dll -Destination "${{ github.workspace }}\\package\\lib" -Recurse
           
       - uses: actions/upload-artifact@v4.6.0
         name: Upload Artifacts
         with:
           name: lib
           if-no-files-found: error
-          path: "${{ github.workspace }}/package/lib/*.dll"
+          path: "${{ github.workspace }}\\package\\lib\\*.dll"
   publish:
     needs: build
     runs-on: windows-latest
