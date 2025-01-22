@@ -21,10 +21,9 @@ jobs:
       - name: Verify Gang Beasts Executable
         run: |
           if (!(Test-Path "${{ github.workspace }}\\Gang Beasts\\Gang Beasts.exe")) {
-            Write-Error "Gang Beasts executable not found!"
+            Get-ChildItem -Path "${{github.workspace}}" | Write-Output
 
-            Get-ChildItem -Path "${{github.workspace}}"
-            exit 1
+            throw "Gang Beasts executable not found!"
           }
 
       - name: Install MelonLoader
