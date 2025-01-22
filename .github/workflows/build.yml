@@ -20,26 +20,26 @@ jobs:
 
       - name: Verify Gang Beasts Executable
         run: |
-          if (!(Test-Path "${{ github.workspace }}\\Gang Beasts\\Gang Beasts.exe")) {
+          if (!(Test-Path "${{ github.workspace }}\\Gang Beasts.exe")) {
             Get-ChildItem -Path "${{github.workspace}}" | Write-Output
 
-            throw "Gang Beasts executable not found!"
+            throw "Gang Beasts.exe not found!"
           }
 
       - name: Install MelonLoader
         run: |
           Invoke-WebRequest -OutFile "${{ github.workspace }}\\MelonLoader.x64.zip" -Uri https://github.com/LavaGang/MelonLoader/releases/download/v0.6.6/MelonLoader.x64.zip
-          Expand-Archive -Path "${{ github.workspace }}\\MelonLoader.x64.zip" -DestinationPath "${{ github.workspace }}\\Gang Beasts"
+          Expand-Archive -Path "${{ github.workspace }}\\MelonLoader.x64.zip" -DestinationPath "${{ github.workspace }}"
 
       - name: Test-run Gang Beasts
         run: |
-          & "${{ github.workspace }}\\Gang Beasts\\Gang Beasts.exe"
+          & "${{ github.workspace }}\\Gang Beasts.exe"
           Start-Sleep -Minutes 3
           Get-Process "Gang Beasts" | Stop-Process
 
       - name: Find and copy assemblies to package
         run: |
-          Copy-Item "${{ github.workspace }}\\Gang Beasts\\MelonLoader\\Il2CppAssemblies" -Filter *.dll -Destination "${{ github.workspace }}\\package\\lib" -Recurse
+          Copy-Item "${{ github.workspace }}\\MelonLoader\\Il2CppAssemblies" -Filter *.dll -Destination "${{ github.workspace }}\\package\\lib" -Recurse
           
       - uses: actions/upload-artifact@v4.6.0
         name: Upload Artifacts
