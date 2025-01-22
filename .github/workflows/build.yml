@@ -21,7 +21,7 @@ jobs:
 
       - name: Install MelonLoader
         run: |
-          wget -P "${{ github.workspace }}" https://github.com/LavaGang/MelonLoader/releases/download/v0.6.6/MelonLoader.x64.zip
+          Invoke-WebRequest -OutFile "${{ github.workspace }}\\MelonLoader.x64.zip" -Uri https://github.com/LavaGang/MelonLoader/releases/download/v0.6.6/MelonLoader.x64.zip
           Expand-Archive -Path "${{ github.workspace }}\\MelonLoader.x64.zip" -DestinationPath "${{ github.workspace }}\\Gang Beasts"
 
       - name: Test-run Gang Beasts
