@@ -26,7 +26,7 @@ jobs:
       - name: Test-run Gang Beasts
         run: |
           & "${{ github.workspace }}\\Gang Beasts\\Gang Beasts.exe"
-          Start-Sleep -Minutes 5
+          Start-Sleep -Minutes 3
           Get-Process "Gang Beasts" | Stop-Process
 
       - name: Find and copy assemblies to package
