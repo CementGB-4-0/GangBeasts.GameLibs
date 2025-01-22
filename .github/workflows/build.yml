@@ -1,0 +1,63 @@
+name: Build
+
+on: push
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download Gang Beasts
+        uses: dhkatz/steam-download@v1.2.0
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          password: ${{ secrets.STEAM_PASSWORD }}
+          appid: ${{ secrets.STEAM_APP_ID }}
+          path: "${{ github.workspace }}\\Gang Beasts"
+
+      - name: Install MelonLoader
+        run: |
+          wget -P "${{ github.workspace }}" https://github.com/LavaGang/MelonLoader/releases/download/v0.6.6/MelonLoader.x64.zip
+          Expand-Archive -Path "${{ github.workspace }}\\MelonLoader.x64.zip" -DestinationPath "${{ github.workspace }}\\Gang Beasts"
+
+      - name: Test-run Gang Beasts
+        run: |
+          & "${{ github.workspace }}\\Gang Beasts\\Gang Beasts.exe"
+          Start-Sleep -Minutes 5
+          Get-Process "Gang Beasts" | Stop-Process
+
+      - name: Find and copy assemblies to package
+        run: |
+          Copy-Item "${{ github.workspace }}\\Gang Beasts\\MelonLoader\\Il2CppAssemblies" -Filter *.dll -Destination "${{ github.workspace }}" -Recurse
+          
+      - uses: actions/upload-artifact@v4.6.0
+        name: Upload Artifacts
+        with:
+          name: lib
+          if-no-files-found: error
+          path: "${{ github.workspace }}/package/lib/*.dll"
+  publish:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: lib
+          path: package/lib
+
+      - uses: NuGet/setup-nuget@v1.2.0
+        with:
+          nuget-version: 'latest'
+          
+      - name: Pack NuGet Package
+        run: nuget pack package -OutputFileNamesWithoutVersion -OutputDirectory build -Properties "git=https://github.com/${{ github.repository }}.git;name=${{ github.event.repository.name }};author=${{ github.repository_owner }};description=${{ github.event.repository.description }};version=${{ github.run_number }}.0.0-gh"
+
+      - name: Upload NuGet Package Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuget
+          path: build/*.nupkg
