@@ -19,6 +19,15 @@ jobs:
           appid: ${{ secrets.STEAM_APP_ID }}
           path: "${{ github.workspace }}\\Gang Beasts"
 
+      - name: Verify Gang Beasts Executable
+        run: |
+          if (!(Test-Path "${{ github.workspace }}\\Gang Beasts\\Gang Beasts.exe")) {
+            Write-Error "Gang Beasts executable not found!"
+
+            tree "${{github.workspace}}" /F
+            exit 1
+          }
+
       - name: Install MelonLoader
         run: |
           Invoke-WebRequest -OutFile "${{ github.workspace }}\\MelonLoader.x64.zip" -Uri https://github.com/LavaGang/MelonLoader/releases/download/v0.6.6/MelonLoader.x64.zip
