@@ -15,7 +15,4 @@
 
         <icon>icon.png</icon>
     </metadata>
-    <files>
-        <file src="bin\**" target="lib\net6" />
-    </files>
 </package>
