@@ -39,14 +39,14 @@ jobs:
 
       - name: Find and copy assemblies to package
         run: |
-          Copy-Item "${{ github.workspace }}\\MelonLoader\\Il2CppAssemblies" -Filter *.dll -Destination "${{ github.workspace }}\\package\\lib" -Recurse
+          Copy-Item "${{ github.workspace }}\\MelonLoader\\Il2CppAssemblies" -Filter *.dll -Destination "${{ github.workspace }}\\package\\lib\\net6.0" -Recurse
 
       - uses: actions/upload-artifact@v4.6.0
         name: Upload Artifacts
         with:
           name: lib
           if-no-files-found: error
-          path: "${{ github.workspace }}\\package\\lib\\net6\\*.dll"
+          path: "${{ github.workspace }}\\package\\lib\\net6.0\\*.dll"
 
   publish:
     runs-on: windows-latest
@@ -58,7 +58,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: lib
-          path: package\\lib\\net6
+          path: package\\lib\\net6.0
 
       - uses: NuGet/setup-nuget@v1.2.0
         with:
