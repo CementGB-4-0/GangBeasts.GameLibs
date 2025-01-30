@@ -57,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: lib
-          path: package/lib/net6
+          path: package/lib/net6.0
 
       - uses: NuGet/setup-nuget@v1.2.0
         with:
