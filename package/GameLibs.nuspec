@@ -4,14 +4,13 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         
         <!-- Version of your nuget package. Should reflect the game version where the libs come from. -->
-        <version>1.25.0-gh$version$</version>
+        <version>$version$-gh$run$</version>
 
-        <!-- The GitHub workflow will automatically populate these. -->
-        <id>$name$</id>
-        <title>$name$</title>
-        <authors>$author$</authors>
-        <description>$description$</description>
-        <repository type="git" url="$git$" />
+        <id>GangBeasts.GameLibs</id>
+        <title>GangBeasts.GameLibs</title>
+        <authors>TheUltimateNuke</authors>
+        <description>IL2CPP proxy assemblies generated from Gang Beasts using MelonLoader. Meant to be used for making MelonLoader/CementGB code mods.</description>
+        <repository type="git" url="https://github.com/TheUltimateNuke/GangBeasts.GameLibs.git" />
 
         <icon>icon.png</icon>
     </metadata>
