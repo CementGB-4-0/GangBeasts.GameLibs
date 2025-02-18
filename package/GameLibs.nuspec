@@ -11,7 +11,10 @@
         <authors>TheUltimateNuke</authors>
         <description>IL2CPP proxy assemblies generated from Gang Beasts using MelonLoader. Meant to be used for making MelonLoader/CementGB code mods.</description>
         <repository type="git" url="https://github.com/TheUltimateNuke/GangBeasts.GameLibs.git" />
-
         <icon>icon.png</icon>
+
+        <dependencies>
+            <group targetFramework="net6.0"/>
+        </dependencies>
     </metadata>
 </package>
