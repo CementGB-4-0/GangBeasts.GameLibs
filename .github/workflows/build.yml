@@ -35,7 +35,7 @@ jobs:
         run: |
           & "${{ github.workspace }}\\Gang Beasts.exe"
           Start-Sleep -Seconds 120
-          Get-Process "Gang Beasts" | Stop-Process
+          if (Get-Process "Gang Beasts") { Stop-Process "Gang Beasts" }
 
       - name: Find and copy assemblies to package
         run: |
