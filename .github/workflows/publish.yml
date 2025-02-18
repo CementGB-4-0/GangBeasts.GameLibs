@@ -3,6 +3,9 @@ name: Publish
 on:
   release:
     types: [published]
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
   workflow_dispatch:
 
 jobs:
@@ -28,7 +31,7 @@ jobs:
 
       - name: Install MelonLoader
         run: |
-          Invoke-WebRequest -OutFile "${{ github.workspace }}\\MelonLoader.x64.zip" -Uri https://github.com/LavaGang/MelonLoader/releases/download/v0.6.6/MelonLoader.x64.zip
+          Invoke-WebRequest -OutFile "${{ github.workspace }}\\MelonLoader.x64.zip" -Uri https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip
           Expand-Archive -Path "${{ github.workspace }}\\MelonLoader.x64.zip" -DestinationPath "${{ github.workspace }}"
 
       - name: Test-run Gang Beasts
@@ -37,7 +40,7 @@ jobs:
           Start-Sleep -Seconds 120
           Get-Process "Gang Beasts" | Stop-Process
 
-      - name: Find and copy assemblies to package
+      - name: Find and copy Il2CppAssemblies to package
         run: |
           Copy-Item "${{ github.workspace }}\\MelonLoader\\Il2CppAssemblies" -Filter *.dll -Destination "${{ github.workspace }}\\package\\lib\\net6.0" -Recurse
 
@@ -64,9 +67,11 @@ jobs:
         with:
           nuget-version: "latest"
 
-      - name: Pack nuget
-        run: nuget pack package -OutputFileNamesWithoutVersion -OutputDirectory build -Properties "version=${{github.event.release.tag_name}};run=${{github.run_number}}"
+      - name: Pack NuGet Package
+        run: |
+          TAG=${{ github.event.release.tag_name }}
+          nuget pack package -OutputFileNamesWithoutVersion -OutputDirectory build -Properties "version=${TAG#v};run=${{github.run_number}}"
 
-      - name: Publish nuget
+      - name: Publish NuGet Package
         run: |
           nuget push "build/GangBeasts.GameLibs.nupkg" -ApiKey ${{ secrets.NUGET_KEY }} -Source https://api.nuget.org/v3/index.json

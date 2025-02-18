@@ -28,7 +28,7 @@ jobs:
 
       - name: Install MelonLoader
         run: |
-          Invoke-WebRequest -OutFile "${{ github.workspace }}\\MelonLoader.x64.zip" -Uri https://github.com/LavaGang/MelonLoader/releases/download/v0.6.6/MelonLoader.x64.zip
+          Invoke-WebRequest -OutFile "${{ github.workspace }}\\MelonLoader.x64.zip" -Uri https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip
           Expand-Archive -Path "${{ github.workspace }}\\MelonLoader.x64.zip" -DestinationPath "${{ github.workspace }}"
 
       - name: Test-run Gang Beasts
@@ -64,7 +64,8 @@ jobs:
           nuget-version: 'latest'
           
       - name: Pack NuGet Package
-        run: nuget pack package -OutputFileNamesWithoutVersion -OutputDirectory build -Properties "version=1.0.0;run=${{github.run_number}}"
+        run: |
+          nuget pack package -OutputFileNamesWithoutVersion -OutputDirectory build -Properties "version=1.0.0;run=${{github.run_number}}"
 
       - name: Upload NuGet Package Artifact
         uses: actions/upload-artifact@v4
