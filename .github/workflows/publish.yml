@@ -38,7 +38,7 @@ jobs:
         run: |
           & "${{ github.workspace }}\\Gang Beasts.exe"
           Start-Sleep -Seconds 120
-          if (Get-Process "Gang Beasts") { Stop-Process "Gang Beasts" }
+          Get-Process -Name "Gang Beasts" -ErrorAction SilentlyContinue | Stop-Process -Force
 
       - name: Find and copy Il2CppAssemblies to package
         run: |
