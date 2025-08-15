@@ -13,10 +13,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download Gang Beasts
-        uses: dhkatz/steam-download@v1.2.0
+        uses: TheUltimateNuke/steam-download
         with:
           username: ${{ secrets.STEAM_USERNAME }}
           vdf: ${{ secrets.STEAM_VDF }}
+          vdf_compressed: true
           appid: ${{ secrets.STEAM_APP_ID }}
           path: "${{ github.workspace }}"
 
