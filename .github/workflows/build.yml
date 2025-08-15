@@ -14,6 +14,7 @@ jobs:
         uses: TheUltimateNuke/steam-download@v1.0.0
         with:
           username: ${{ secrets.STEAM_USERNAME }}
+          password: ${{ secrets.STEAM_PASSWORD }}
           vdf: ${{ secrets.STEAM_VDF }}
           vdf_compressed: true
           appid: ${{ secrets.STEAM_APP_ID }}
